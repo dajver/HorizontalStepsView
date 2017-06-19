@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Steps</string>
+
+    <string name="textview_section">Отрезок</string>
+    <string name="textview_trigger">Триггер</string>
+    <string name="textview_under_tour">Подтур к\n последнему\n триггеру</string>
+    <string name="textview_create">Создать</string>
+
+</resources>
