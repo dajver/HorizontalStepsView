@@ -71,16 +71,16 @@ public class ButtonStepsView extends LinearLayout {
         allSubBtns = new ArrayList<>();
     }
 
-    public void createButtons() {
+    public void createButton() {
         listener.onUpdateAdapter();
 
         buttonView = new ButtonView(context);
-        buttonsView.addView(initButtons());
+        buttonsView.addView(addBigButton());
 
         hScroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
     }
 
-    public View initButtons() {
+    public View addBigButton() {
         counter++;
 
         stepNumber = String.valueOf(counter);

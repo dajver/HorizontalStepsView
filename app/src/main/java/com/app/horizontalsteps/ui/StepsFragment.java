@@ -26,7 +26,7 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
     private static final int RESULT_CODE_CREATE_STEP = 3;
 
     @BindView(R.id.listView2)
-    ListView list;
+    ListView listView;
     @BindView(R.id.buttonsStepsView)
     ButtonStepsView buttonStepsView;
 
@@ -42,12 +42,12 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
 
         recData = new StepsController(getActivity()).getInfo(stepNumber);
         adapter = new StepsAdapter(getActivity(), recData);
-        list.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
         buttonStepsView.setListener(this);
         buttonStepsView.setRecData(recData);
         buttonStepsView.setStepNumber(stepNumber);
-        buttonStepsView.createButtons();
+        buttonStepsView.createButton();
     }
 
     @Override
@@ -78,9 +78,9 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
         recData = new StepsController(getActivity()).getInfo(stepNumber);
         if(recData.size() != 0) {
             adapter = new StepsAdapter(getActivity(), recData);
-            list.setAdapter(adapter);
+            listView.setAdapter(adapter);
         } else
-            list.setAdapter(null);
+            listView.setAdapter(null);
     }
 
     @Override
@@ -92,9 +92,9 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
                     if(resultCode == getActivity().RESULT_OK) {
                         String result = data.getStringExtra(CreateStepActivity.RESULT);
                         if(result.equals(CreateStepActivity.RESULT_SECTION)) {
-                            buttonStepsView.createButtons();
+                            buttonStepsView.createButton();
                         } else if(result.equals(CreateStepActivity.RESULT_TRIGGER)) {
-                            buttonStepsView.createButtons();
+                            buttonStepsView.createButton();
                         } else if(result.equals(CreateStepActivity.RESULT_UNDER_TOUR)) {
                             buttonStepsView.addSubBtn();
                         }
@@ -106,7 +106,7 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
 
     @Override
     public void onUpdateAdapter() {
-        list.setAdapter(null);
+        listView.setAdapter(null);
     }
 
     @Override
