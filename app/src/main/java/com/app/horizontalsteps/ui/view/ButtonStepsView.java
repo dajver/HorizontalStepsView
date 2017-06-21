@@ -1,121 +1,90 @@
-package com.app.horizontalsteps.fragments;
+package com.app.horizontalsteps.ui.view;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.app.horizontalsteps.CreateStepActivity;
 import com.app.horizontalsteps.R;
-import com.app.horizontalsteps.adapter.StepsAdapter;
-import com.app.horizontalsteps.db.StepsController;
-import com.app.horizontalsteps.db.items.StepsDataIModel;
-import com.app.horizontalsteps.view.ButtonView;
+import com.app.horizontalsteps.ui.db.items.StepsDataIModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.realm.RealmResults;
 
-public class StepsFragment extends Fragment {
+/**
+ * Created by gleb on 6/21/17.
+ */
 
-    private static final int RESULT_CODE_CREATE_STEP = 3;
-
-    private int counter = 0;
-    private int audioCounter = 0;
-
-    private List<Button> allMainBtns;
-    private List<Button> allSubBtns;
+public class ButtonStepsView extends LinearLayout {
 
     @BindView(R.id.buttonsView)
     LinearLayout buttonsView;
     @BindView(R.id.horizontalScrollView)
     HorizontalScrollView hScroll;
-    @BindView(R.id.listView2)
-    ListView list;
 
     private ButtonView buttonView;
-    private StepsAdapter adapter;
-    private RealmResults<StepsDataIModel> recData;
 
-    private long lastWriteID;
+    private int counter = 0;
     private String stepNumber = "1";
+    private Context context;
+
+    private Listener listener;
 
     private LinearLayout.LayoutParams sp;
     private LinearLayout.LayoutParams vp;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_steps, container, false);
-        setRetainInstance(true);
-        ButterKnife.bind(this, rootView);
+    private List<Button> allMainBtns;
+    private List<Button> allSubBtns;
+
+    private RealmResults<StepsDataIModel> recData;
+
+    public ButtonStepsView(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public ButtonStepsView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public ButtonStepsView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    public void init(Context context) {
+        this.context = context;
+        inflate(context, R.layout.view_buttons_steps, this);
+        setOrientation(VERTICAL);
+        ButterKnife.bind(this);
 
         allMainBtns = new ArrayList<>();
         allSubBtns = new ArrayList<>();
-
-        createButtons();
-
-        recData = new StepsController(getActivity()).getInfo(stepNumber, String.valueOf(lastWriteID));
-        adapter = new StepsAdapter(getActivity(), R.layout.item_steps, recData);
-        list.setAdapter(adapter);
-
-        return rootView;
     }
 
-    @OnClick(R.id.nextBtn)
-    public void onNextClick() {
-        audioCounter = 0;
+    public void createButtons() {
+        listener.onUpdateAdapter();
 
-        Intent i = new Intent(getActivity(), CreateStepActivity.class);
-        startActivityForResult(i, RESULT_CODE_CREATE_STEP);
-    }
-
-    @OnClick(R.id.recBtn)
-    public void onRecClick() {
-        audioCounter++;
-
-        String fileName = "Item_" + String.format("%03d", audioCounter);
-        new StepsController(getActivity()).addInfo(String.valueOf(lastWriteID), stepNumber, "let", fileName);
-        selectData();
-    }
-
-    private void selectData() {
-        recData = new StepsController(getActivity()).getInfo(stepNumber, String.valueOf(lastWriteID));
-        if(recData.size() != 0) {
-            for (int i = 0; i < recData.size(); i++) {
-                adapter = new StepsAdapter(getActivity(), R.layout.item_steps, recData);
-                list.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        } else {
-            list.setAdapter(null);
-        }
-    }
-
-    private void createButtons() {
-        list.setAdapter(null);
-
-        buttonView = new ButtonView(getActivity());
+        buttonView = new ButtonView(context);
         buttonsView.addView(initButtons());
 
         hScroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
     }
 
-    private View initButtons() {
+    public View initButtons() {
         counter++;
 
         stepNumber = String.valueOf(counter);
+        listener.onStepCounterChanged(stepNumber);
 
         final int btnSize = 260;
         final int btnSmallSize = 80;
@@ -128,11 +97,12 @@ public class StepsFragment extends Fragment {
         vp.setMargins(0,0,0,20);
         sp.setMargins(0,0,0,20);
         buttonView.getMainButton().setId(counter);
-        buttonView.getMainButton().setText(""+counter);
+        buttonView.getMainButton().setText("" + counter);
         buttonView.getMainButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stepNumber = ((TextView) v).getText().toString();
+                listener.onStepCounterChanged(stepNumber);
 
                 for (int i = 0; i < allMainBtns.size(); i++) {
                     allMainBtns.get(i).setLayoutParams (sp);
@@ -144,7 +114,7 @@ public class StepsFragment extends Fragment {
                 allMainBtns.get(v.getId() - 1).setLayoutParams (vp);
                 allMainBtns.get(v.getId() - 1).setTextSize(textSize);
 
-                selectData();
+                listener.selectData();
             }
         });
         allMainBtns.add(buttonView.getMainButton());
@@ -163,13 +133,14 @@ public class StepsFragment extends Fragment {
         return buttonView;
     }
 
-    private void addSubBtn() {
+    public void addSubBtn() {
         final int textSize = 25;
         final int smallTextSize = 16;
 
-        list.setAdapter(null);
+        listener.onUpdateAdapter();
 
         stepNumber = String.valueOf(counter + " ext");
+        listener.onStepCounterChanged(stepNumber);
 
         buttonView.getSubButton().setVisibility(View.VISIBLE);
         buttonView.getSubButton().setText(counter + " ext");
@@ -178,6 +149,7 @@ public class StepsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 stepNumber = ((TextView) v).getText().toString();
+                listener.onStepCounterChanged(stepNumber);
 
                 for (int i = 0; i < allSubBtns.size(); i++) {
                     allMainBtns.get(i).setLayoutParams (sp);
@@ -190,7 +162,7 @@ public class StepsFragment extends Fragment {
                 allSubBtns.get(v.getId() - 1).setLayoutParams (vp);
                 allSubBtns.get(v.getId() - 1).setTextSize(textSize);
 
-                selectData();
+                listener.selectData();
             }
         });
         for (int i = 0; i < allSubBtns.size(); i++) {
@@ -205,24 +177,21 @@ public class StepsFragment extends Fragment {
         allSubBtns.get(allSubBtns.size() - 1).setTextSize(textSize);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case RESULT_CODE_CREATE_STEP: {
-                if (resultCode == Activity.RESULT_OK) {
-                    if(resultCode == getActivity().RESULT_OK) {
-                        String result = data.getStringExtra(CreateStepActivity.RESULT);
-                        if(result.equals(CreateStepActivity.RESULT_SECTION)) {
-                            createButtons();
-                        } else if(result.equals(CreateStepActivity.RESULT_TRIGGER)) {
-                            createButtons();
-                        } else if(result.equals(CreateStepActivity.RESULT_UNDER_TOUR)) {
-                            addSubBtn();
-                        }
-                    }
-                }
-            } break;
-        }
+    public void setRecData(RealmResults<StepsDataIModel> recData) {
+        this.recData = recData;
+    }
+
+    public void setStepNumber(String stepNumber) {
+        this.stepNumber = stepNumber;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onUpdateAdapter();
+        void onStepCounterChanged(String stepNumber);
+        void selectData();
     }
 }

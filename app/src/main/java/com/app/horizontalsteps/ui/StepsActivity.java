@@ -1,11 +1,11 @@
-package com.app.horizontalsteps;
+package com.app.horizontalsteps.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.app.horizontalsteps.fragments.StepsFragment;
+import com.app.horizontalsteps.R;
 
-public class MainActivity extends FragmentActivity {
+public class StepsActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

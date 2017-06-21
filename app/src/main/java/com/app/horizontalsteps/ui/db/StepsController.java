@@ -1,8 +1,8 @@
-package com.app.horizontalsteps.db;
+package com.app.horizontalsteps.ui.db;
 
 import android.content.Context;
 
-import com.app.horizontalsteps.db.items.StepsDataIModel;
+import com.app.horizontalsteps.ui.db.items.StepsDataIModel;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -18,22 +18,20 @@ public class StepsController {
         realm = Realm.getDefaultInstance();
     }
 
-    public void addInfo(String tourID, String stepID, String path, String name) {
+    public void addInfo(String stepID, String name) {
         realm.beginTransaction();
 
         StepsDataIModel realmObject = realm.createObject(StepsDataIModel.class);
         int id = getNextKey();
         realmObject.setId(id);
-        realmObject.setTourID(tourID);
         realmObject.setStepID(stepID);
-        realmObject.setPath(path);
         realmObject.setName(name);
 
         realm.commitTransaction();
     }
 
-    public RealmResults<StepsDataIModel> getInfo(String stepId, String tourId) {
-        return realm.where(StepsDataIModel.class).equalTo("stepID", stepId).equalTo("tourID", tourId).findAll();
+    public RealmResults<StepsDataIModel> getInfo(String stepId) {
+        return realm.where(StepsDataIModel.class).equalTo("stepID", stepId).findAll();
     }
 
     private int getNextKey() {

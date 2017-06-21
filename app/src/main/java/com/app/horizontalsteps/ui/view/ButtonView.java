@@ -1,4 +1,4 @@
-package com.app.horizontalsteps.view;
+package com.app.horizontalsteps.ui.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

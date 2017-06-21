@@ -33,12 +33,13 @@
                 android:gravity="center_horizontal">
 
                 <ImageButton
+                    android:id="@+id/sectionBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sectionBtn"
-                    android:src="@drawable/section_btn"
+                    android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:layout_marginTop="10dp" />
+                    android:onClick="onSectionCLick"
+                    android:src="@drawable/section_btn" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,12 +59,13 @@
                 android:layout_marginLeft="20dp">
 
                 <ImageButton
+                    android:id="@+id/triggerBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/triggerBtn"
-                    android:src="@drawable/trigger_btn"
+                    android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:layout_marginTop="10dp" />
+                    android:onClick="onTriggerClick"
+                    android:src="@drawable/trigger_btn" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,11 +85,12 @@
                 android:layout_marginLeft="20dp">
 
                 <ImageButton
+                    android:id="@+id/underTourBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/underTourBtn"
-                    android:src="@drawable/under_tour_btn"
-                    android:background="@null" />
+                    android:background="@null"
+                    android:onClick="onSubCLick"
+                    android:src="@drawable/under_tour_btn" />
 
                 <TextView
                     android:layout_width="wrap_content"
