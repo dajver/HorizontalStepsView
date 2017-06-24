@@ -16,19 +16,14 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/buttonsView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_above="@+id/textView27"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical|center_horizontal"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/buttonsView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/textView27"
-                android:layout_alignParentTop="true"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="horizontal" />
         </LinearLayout>
 
     </LinearLayout>

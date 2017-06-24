@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.app.horizontalsteps.R;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,6 +22,15 @@ public class ButtonView extends LinearLayout {
     Button mainButton;
     @BindView(R.id.subButton)
     Button subButton;
+
+    @BindDimen(R.dimen.mainButtonSize)
+    int mainButtonSize;
+    @BindDimen(R.dimen.mainButtonTextSize)
+    int mainButtonTextSize;
+    @BindDimen(R.dimen.smallButtonSize)
+    int smallButtonSize;
+    @BindDimen(R.dimen.smallButtonTextSize)
+    int smallButtonTextSize;
 
     private LinearLayout.LayoutParams smallSize;
     private LinearLayout.LayoutParams bigSize;
@@ -48,14 +58,11 @@ public class ButtonView extends LinearLayout {
     }
 
     private void setupView() {
-        final int btnSize = 260;
-        final int btnSmallSize = 80;
-
-        bigSize = new LinearLayout.LayoutParams(btnSize, btnSize);
-        smallSize = new LinearLayout.LayoutParams(btnSmallSize, btnSmallSize);
+        bigSize = new LinearLayout.LayoutParams(mainButtonSize, mainButtonSize);
+        smallSize = new LinearLayout.LayoutParams(smallButtonSize, smallButtonSize);
         mainButton.setLayoutParams(bigSize);
-        bigSize.setMargins(0,0,0,20);
-        smallSize.setMargins(0,0,0,20);
+        bigSize.setMargins(0, 0, 0, 20);
+        smallSize.setMargins(0, 0, 0, 20);
     }
 
     public Button getMainButton() {
@@ -75,12 +82,10 @@ public class ButtonView extends LinearLayout {
     }
 
     public int smallTextSize() {
-        final int smallTextSize = 16;
-        return smallTextSize;
+        return smallButtonTextSize;
     }
 
     public int textSize() {
-        int textSize = 25;
-        return textSize;
+        return mainButtonTextSize;
     }
 }
