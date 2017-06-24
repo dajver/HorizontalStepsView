@@ -49,8 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onRecClick"
-            android:text="ADD ITEM"
-            android:textColor="@color/Red" />
+            android:text="ADD ITEM" />
 
     </LinearLayout>
 

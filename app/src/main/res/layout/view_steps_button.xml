@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <View
+        android:id="@+id/view"
         android:layout_width="25dp"
         android:layout_height="3dp"
-        android:background="@color/sliver"></View>
+        android:background="@color/colorPrimary"></View>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/view"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -28,10 +30,10 @@
 
         <Button
             android:id="@+id/subButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/round_button"
-            android:text="1 доп"
+            android:text="1.1"
             android:textColor="@color/white"
             android:visibility="gone" />
     </LinearLayout>

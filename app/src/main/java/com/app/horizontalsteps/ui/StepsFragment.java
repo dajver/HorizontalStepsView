@@ -45,8 +45,6 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
         listView.setAdapter(adapter);
 
         buttonStepsView.setListener(this);
-        buttonStepsView.setRecData(recData);
-        buttonStepsView.setStepNumber(stepNumber);
         buttonStepsView.createButton();
     }
 

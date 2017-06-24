@@ -22,6 +22,9 @@ public class ButtonView extends LinearLayout {
     @BindView(R.id.subButton)
     Button subButton;
 
+    private LinearLayout.LayoutParams smallSize;
+    private LinearLayout.LayoutParams bigSize;
+
     public ButtonView(Context context) {
         super(context);
         init(context);
@@ -41,6 +44,18 @@ public class ButtonView extends LinearLayout {
         inflate(context, R.layout.view_steps_button, this);
         setOrientation(HORIZONTAL);
         ButterKnife.bind(this);
+        setupView();
+    }
+
+    private void setupView() {
+        final int btnSize = 260;
+        final int btnSmallSize = 80;
+
+        bigSize = new LinearLayout.LayoutParams(btnSize, btnSize);
+        smallSize = new LinearLayout.LayoutParams(btnSmallSize, btnSmallSize);
+        mainButton.setLayoutParams(bigSize);
+        bigSize.setMargins(0,0,0,20);
+        smallSize.setMargins(0,0,0,20);
     }
 
     public Button getMainButton() {
@@ -49,5 +64,23 @@ public class ButtonView extends LinearLayout {
 
     public Button getSubButton() {
         return subButton;
+    }
+
+    public LayoutParams getSmallButtonSizeStyle() {
+        return smallSize;
+    }
+
+    public LayoutParams getBigButtonSizeStyle() {
+        return bigSize;
+    }
+
+    public int smallTextSize() {
+        final int smallTextSize = 16;
+        return smallTextSize;
+    }
+
+    public int textSize() {
+        int textSize = 25;
+        return textSize;
     }
 }
