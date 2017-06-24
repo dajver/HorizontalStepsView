@@ -45,7 +45,7 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
         listView.setAdapter(adapter);
 
         buttonStepsView.setListener(this);
-        buttonStepsView.createButton();
+        buttonStepsView.addMainButton();
     }
 
     @Override
@@ -90,9 +90,9 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
                     if(resultCode == getActivity().RESULT_OK) {
                         String result = data.getStringExtra(CreateStepActivity.RESULT);
                         if(result.equals(CreateStepActivity.RESULT_SECTION)) {
-                            buttonStepsView.createButton();
+                            buttonStepsView.addMainButton();
                         } else if(result.equals(CreateStepActivity.RESULT_TRIGGER)) {
-                            buttonStepsView.createButton();
+                            buttonStepsView.addMainButton();
                         } else if(result.equals(CreateStepActivity.RESULT_UNDER_TOUR)) {
                             buttonStepsView.addSubBtn();
                         }

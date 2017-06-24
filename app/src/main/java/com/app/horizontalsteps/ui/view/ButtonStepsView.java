@@ -64,25 +64,15 @@ public class ButtonStepsView extends LinearLayout {
         allSubBtns = new ArrayList<>();
     }
 
-    public void createButton() {
+    public void addMainButton() {
         listener.onUpdateAdapter();
 
-        buttonView = new ButtonView(context);
-        buttonsView.addView(addBigButton());
-
-        scrollView.postDelayed(new Runnable() {
-            public void run() {
-                scrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-            }
-        }, 100L);
-    }
-
-    public View addBigButton() {
         counter++;
 
         stepNumber = String.valueOf(counter);
         listener.onStepCounterChanged(stepNumber);
 
+        buttonView = new ButtonView(context);
         buttonView.getMainButton().setId(counter);
         buttonView.getMainButton().setText(String.valueOf(counter));
         buttonView.getMainButton().setOnClickListener(new View.OnClickListener() {
@@ -91,11 +81,18 @@ public class ButtonStepsView extends LinearLayout {
                 onButtonClick(v);
             }
         });
+        buttonsView.addView(buttonView);
+
         allMainBtns.add(buttonView.getMainButton());
         allSubBtns.add(buttonView.getSubButton());
 
         makeAllButtonsSmall(allMainBtns);
-        return buttonView;
+
+        scrollView.postDelayed(new Runnable() {
+            public void run() {
+                scrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+            }
+        }, 100L);
     }
 
     public void addSubBtn() {
