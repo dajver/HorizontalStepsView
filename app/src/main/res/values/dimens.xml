@@ -6,4 +6,6 @@
     <dimen name="mainButtonSize">75dp</dimen>
     <dimen name="mainButtonTextSize">10sp</dimen>
 
+    <dimen name="buttonPadding">5dp</dimen>
+
 </resources>

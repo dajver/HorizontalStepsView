@@ -31,6 +31,8 @@ public class ButtonView extends LinearLayout {
     int smallButtonSize;
     @BindDimen(R.dimen.smallButtonTextSize)
     int smallButtonTextSize;
+    @BindDimen(R.dimen.buttonPadding)
+    int buttonPadding;
 
     private LinearLayout.LayoutParams smallSize;
     private LinearLayout.LayoutParams bigSize;
@@ -59,10 +61,10 @@ public class ButtonView extends LinearLayout {
 
     private void setupView() {
         bigSize = new LinearLayout.LayoutParams(mainButtonSize, mainButtonSize);
+        bigSize.setMargins(0, 0, 0, buttonPadding);
         smallSize = new LinearLayout.LayoutParams(smallButtonSize, smallButtonSize);
+        smallSize.setMargins(0, 0, 0, buttonPadding);
         mainButton.setLayoutParams(bigSize);
-        bigSize.setMargins(0, 0, 0, 20);
-        smallSize.setMargins(0, 0, 0, 20);
     }
 
     public Button getMainButton() {
