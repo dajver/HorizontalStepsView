@@ -118,7 +118,10 @@ public class ButtonStepsView extends LinearLayout {
         listener.onStepCounterChanged(stepNumber);
 
         makeAllButtonsSmall(null);
-        buttons.get(v.getId() - 1).setLayoutParams (buttonView.getBigButtonSizeStyle());
+        if(buttons == allSubBtns)
+            buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigSubButton());
+        else
+            buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
         buttons.get(v.getId() - 1).setTextSize(buttonView.textSize());
 
         listener.selectData();
@@ -127,16 +130,19 @@ public class ButtonStepsView extends LinearLayout {
     private void makeAllButtonsSmall(List<Button> clickedButtons) {
         setButtonsStyle(allMainBtns);
         setButtonsStyle(allSubBtns);
-        //instead of one clicked
+        //instead of one which was clicked
         if(clickedButtons != null) {
-            clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
+            if(clickedButtons == allSubBtns)
+                clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigSubButton());
+            else
+                clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
             clickedButtons.get(clickedButtons.size() - 1).setTextSize(buttonView.textSize());
         }
     }
 
     private void setButtonsStyle(List<Button> buttons) {
         for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setLayoutParams (buttonView.getSmallButtonSizeStyle());
+            buttons.get(i).setLayoutParams(buttonView.getSmallButtonSizeStyle());
             buttons.get(i).setTextSize(buttonView.smallTextSize());
         }
     }
