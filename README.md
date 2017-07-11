@@ -2,4 +2,4 @@
 
 Example of horizontal steps buttons 
 
-<img src="https://habrastorage.org/web/0f4/92a/284/0f492a2847944845b173238dc11619a7.png" width="250" />
+<img src="https://habrastorage.org/web/921/207/429/9212074297914f8dbff3ddc0a24c5712.png" width="250" />
