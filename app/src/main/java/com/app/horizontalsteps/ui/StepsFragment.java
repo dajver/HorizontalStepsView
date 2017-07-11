@@ -85,20 +85,18 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case RESULT_CODE_CREATE_STEP: {
+            case RESULT_CODE_CREATE_STEP:
                 if (resultCode == Activity.RESULT_OK) {
                     if(resultCode == getActivity().RESULT_OK) {
                         String result = data.getStringExtra(CreateStepActivity.RESULT);
                         if(result.equals(CreateStepActivity.RESULT_SECTION)) {
-                            buttonStepsView.addMainButton();
-                        } else if(result.equals(CreateStepActivity.RESULT_TRIGGER)) {
                             buttonStepsView.addMainButton();
                         } else if(result.equals(CreateStepActivity.RESULT_UNDER_TOUR)) {
                             buttonStepsView.addSubBtn();
                         }
                     }
                 }
-            } break;
+            break;
         }
     }
 

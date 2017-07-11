@@ -5,32 +5,32 @@
     android:gravity="center_vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView33"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_horizontal"
             android:text="@string/textview_create"
-            android:id="@+id/textView33"
-            android:layout_gravity="center_horizontal" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:layout_marginTop="20dp">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <ImageButton
                     android:id="@+id/sectionBtn"
@@ -42,47 +42,21 @@
                     android:src="@drawable/section_btn" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/textview_section"
                     android:id="@+id/textView31"
-                    android:gravity="center_horizontal" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/textview_section"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
                 android:gravity="center_horizontal"
-                android:layout_marginLeft="20dp">
-
-                <ImageButton
-                    android:id="@+id/triggerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@null"
-                    android:onClick="onTriggerClick"
-                    android:src="@drawable/trigger_btn" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/textview_trigger"
-                    android:id="@+id/textView30"
-                    android:gravity="center_horizontal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="20dp">
+                android:orientation="vertical">
 
                 <ImageButton
                     android:id="@+id/underTourBtn"
@@ -93,12 +67,12 @@
                     android:src="@drawable/under_tour_btn" />
 
                 <TextView
+                    android:id="@+id/textView32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:gravity="center_horizontal"
                     android:text="@string/textview_under_tour"
-                    android:id="@+id/textView32"
-                    android:gravity="center_horizontal" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
 

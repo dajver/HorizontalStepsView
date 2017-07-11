@@ -11,7 +11,6 @@ public class CreateStepActivity extends Activity {
 
     public static final String RESULT = "result";
     public static final String RESULT_SECTION = "createSection";
-    public static final String RESULT_TRIGGER = "createTrigger";
     public static final String RESULT_UNDER_TOUR = "createUnderTour";
 
     @Override
@@ -28,14 +27,6 @@ public class CreateStepActivity extends Activity {
        setResult(RESULT_OK, returnIntent);
        finish();
    }
-
-    @OnClick(R.id.triggerBtn)
-    public void onTriggerClick() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(RESULT, RESULT_TRIGGER);
-        setResult(RESULT_OK, returnIntent);
-        finish();
-    }
 
     @OnClick(R.id.underTourBtn)
     public void onSubClick() {
