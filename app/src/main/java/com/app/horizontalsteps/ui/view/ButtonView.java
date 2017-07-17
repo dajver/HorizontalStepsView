@@ -3,6 +3,7 @@ package com.app.horizontalsteps.ui.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -22,6 +23,8 @@ public class ButtonView extends LinearLayout {
     Button mainButton;
     @BindView(R.id.subButton)
     Button subButton;
+    @BindView(R.id.lineView)
+    View lineView;
 
     @BindDimen(R.dimen.mainButtonSize)
     int mainButtonSize;
@@ -35,6 +38,14 @@ public class ButtonView extends LinearLayout {
     int buttonPadding;
     @BindDimen(R.dimen.bigSubButtonPaddingBottom)
     int bigSubButtonPadding;
+    @BindDimen(R.dimen.lineLongSize)
+    int lineLongSize;
+    @BindDimen(R.dimen.lineNormalSize)
+    int lineNormalSize;
+    @BindDimen(R.dimen.lineHeight)
+    int lineHeight;
+    @BindDimen(R.dimen.paddingOfLine)
+    int paddingOfLine;
 
     private LinearLayout.LayoutParams smallSize;
     private LinearLayout.LayoutParams bigSize;
@@ -81,6 +92,10 @@ public class ButtonView extends LinearLayout {
         return subButton;
     }
 
+    public View getLineView() {
+        return lineView;
+    }
+
     public LayoutParams getSmallButtonSizeStyle() {
         return smallSize;
     }
@@ -91,6 +106,18 @@ public class ButtonView extends LinearLayout {
 
     public LayoutParams getBigSubButton() {
         return bigSubButton;
+    }
+
+    public LayoutParams getLineNormalSize() {
+        LayoutParams params = new LayoutParams(lineNormalSize, lineHeight);
+        params.setMargins(0, paddingOfLine, 0, 0);
+        return params;
+    }
+
+    public LayoutParams getLineLongSize() {
+        LayoutParams params = new LayoutParams(lineLongSize, lineHeight);
+        params.setMargins(0, paddingOfLine, 0, 0);
+        return params;
     }
 
     public int smallTextSize() {

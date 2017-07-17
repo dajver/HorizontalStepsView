@@ -6,8 +6,13 @@
     <dimen name="mainButtonSize">75dp</dimen>
     <dimen name="mainButtonTextSize">10sp</dimen>
 
+    <dimen name="lineNormalSize">35dp</dimen>
+    <dimen name="lineLongSize">110dp</dimen>
+    <dimen name="lineHeight">3dp</dimen>
+
     <dimen name="buttonPadding">5dp</dimen>
 
     <dimen name="bigSubButtonPaddingBottom">-40dp</dimen>
+    <dimen name="paddingOfLine">-20sp</dimen>
 
 </resources>

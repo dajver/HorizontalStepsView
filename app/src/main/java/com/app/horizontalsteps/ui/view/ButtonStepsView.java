@@ -38,6 +38,7 @@ public class ButtonStepsView extends LinearLayout {
 
     private List<Button> allMainBtns;
     private List<Button> allSubBtns;
+    private List<View> allLinesViews;
 
     public ButtonStepsView(Context context) {
         super(context);
@@ -62,6 +63,7 @@ public class ButtonStepsView extends LinearLayout {
 
         allMainBtns = new ArrayList<>();
         allSubBtns = new ArrayList<>();
+        allLinesViews = new ArrayList<>();
     }
 
     public void addMainButton() {
@@ -85,6 +87,7 @@ public class ButtonStepsView extends LinearLayout {
 
         allMainBtns.add(buttonView.getMainButton());
         allSubBtns.add(buttonView.getSubButton());
+        allLinesViews.add(buttonView.getLineView());
 
         makeAllButtonsSmall(allMainBtns);
 
@@ -118,10 +121,13 @@ public class ButtonStepsView extends LinearLayout {
         listener.onStepCounterChanged(stepNumber);
 
         makeAllButtonsSmall(null);
-        if(buttons == allSubBtns)
+        if(buttons == allSubBtns) {
             buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigSubButton());
-        else
+            allLinesViews.get(v.getId() - 1).setLayoutParams(buttonView.getLineLongSize());
+        } else {
             buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
+            allLinesViews.get(v.getId() - 1).setLayoutParams(buttonView.getLineNormalSize());
+        }
         buttons.get(v.getId() - 1).setTextSize(buttonView.textSize());
 
         listener.selectData();
@@ -132,10 +138,13 @@ public class ButtonStepsView extends LinearLayout {
         setButtonsStyle(allSubBtns);
         //instead of one which was clicked
         if(clickedButtons != null) {
-            if(clickedButtons == allSubBtns)
+            if(clickedButtons == allSubBtns) {
                 clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigSubButton());
-            else
+                allLinesViews.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getLineLongSize());
+            } else {
                 clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
+                allLinesViews.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getLineNormalSize());
+            }
             clickedButtons.get(clickedButtons.size() - 1).setTextSize(buttonView.textSize());
         }
     }
@@ -144,6 +153,7 @@ public class ButtonStepsView extends LinearLayout {
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setLayoutParams(buttonView.getSmallButtonSizeStyle());
             buttons.get(i).setTextSize(buttonView.smallTextSize());
+            allLinesViews.get(i).setLayoutParams(buttonView.getLineNormalSize());
         }
     }
 
