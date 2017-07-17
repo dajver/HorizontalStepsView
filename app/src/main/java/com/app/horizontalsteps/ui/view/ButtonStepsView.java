@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -17,16 +18,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.app.horizontalsteps.R.id.horizontalScrollView;
+
 /**
  * Created by gleb on 6/21/17.
  */
 
-public class ButtonStepsView extends LinearLayout {
+public class ButtonStepsView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener {
 
     @BindView(R.id.buttonsView)
     LinearLayout buttonsView;
-    @BindView(R.id.horizontalScrollView)
-    HorizontalScrollView scrollView;
+    @BindView(horizontalScrollView)
+    ObservableHorizontalScrollView scrollView;
 
     private ButtonView buttonView;
 
@@ -64,6 +67,8 @@ public class ButtonStepsView extends LinearLayout {
         allMainBtns = new ArrayList<>();
         allSubBtns = new ArrayList<>();
         allLinesViews = new ArrayList<>();
+
+        scrollView.getViewTreeObserver().addOnPreDrawListener(this);
     }
 
     public void addMainButton() {
@@ -116,7 +121,7 @@ public class ButtonStepsView extends LinearLayout {
         makeAllButtonsSmall(allSubBtns);
     }
 
-    private void onButtonClick(View v, List<Button> buttons) {
+    private void onButtonClick(final View v, List<Button> buttons) {
         stepNumber = ((TextView) v).getText().toString();
         listener.onStepCounterChanged(stepNumber);
 
@@ -159,6 +164,26 @@ public class ButtonStepsView extends LinearLayout {
 
     public void setListener(Listener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public boolean onPreDraw() {
+        scrollView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+        LinearLayout child = (LinearLayout) scrollView.getChildAt(0);
+
+        int width = scrollView.getWidth();
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(width / 2, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        View leftSpacer = new View(getContext());
+        leftSpacer.setLayoutParams(p);
+        child.addView(leftSpacer, 0);
+
+        View rightSpacer = new View(getContext());
+        rightSpacer.setLayoutParams(p);
+        child.addView(rightSpacer);
+
+        return false;
     }
 
     public interface Listener {

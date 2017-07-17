@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.app.horizontalsteps.ui.view.ObservableHorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/horizontalScrollView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -22,4 +24,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</HorizontalScrollView>
+</com.app.horizontalsteps.ui.view.ObservableHorizontalScrollView>
