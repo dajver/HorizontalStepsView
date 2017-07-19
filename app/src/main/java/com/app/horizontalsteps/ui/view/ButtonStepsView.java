@@ -1,9 +1,12 @@
 package com.app.horizontalsteps.ui.view;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -118,7 +121,7 @@ public class ButtonStepsView extends LinearLayout {
         makeAllButtonsSmall(allSubBtns);
     }
 
-    private void onButtonClick(final View v, List<Button> buttons) {
+    private void onButtonClick(final View v, final List<Button> buttons) {
         stepNumber = ((TextView) v).getText().toString();
         listener.onStepCounterChanged(stepNumber);
 
@@ -132,7 +135,30 @@ public class ButtonStepsView extends LinearLayout {
         }
         buttons.get(v.getId() - 1).setTextSize(buttonView.textSize());
 
+        scrollView.postDelayed(new Runnable() {
+            public void run() {
+                scrollToView(scrollView, buttons.get(v.getId() - 1));
+            }
+        }, 100L);
+
         listener.selectData();
+    }
+
+    private void scrollToView(final HorizontalScrollView scrollViewParent, final View view) {
+        // Get deepChild Offset
+        Point childOffset = new Point();
+        getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
+        // Scroll to child.
+        scrollViewParent.smoothScrollTo(childOffset.x / 2, 0);
+    }
+
+    private void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset) {
+        ViewGroup parentGroup = (ViewGroup) parent;
+        accumulatedOffset.x += child.getLeft();
+        if (parentGroup.equals(mainParent)) {
+            return;
+        }
+        getDeepChildOffset(mainParent, parentGroup.getParent(), parentGroup, accumulatedOffset);
     }
 
     private void makeAllButtonsSmall(List<Button> clickedButtons) {
