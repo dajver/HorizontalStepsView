@@ -35,6 +35,7 @@ public class ButtonStepsView extends LinearLayout {
 
     private ButtonView buttonView;
 
+    private int selectedStep = 0;
     private int buttonNumberCounter = 0;
     private String stepNumber = "1";
     private Context context;
@@ -44,6 +45,7 @@ public class ButtonStepsView extends LinearLayout {
     private List<Button> allMainBtns;
     private List<Button> allSubBtns;
     private List<View> allLinesViews;
+    private List<ButtonView> buttonViewList;
 
     public ButtonStepsView(Context context) {
         super(context);
@@ -69,16 +71,18 @@ public class ButtonStepsView extends LinearLayout {
         allMainBtns = new ArrayList<>();
         allSubBtns = new ArrayList<>();
         allLinesViews = new ArrayList<>();
+        buttonViewList = new ArrayList<>();
     }
 
     public void addMainButton() {
         listener.onUpdateAdapter();
         buttonNumberCounter++;
+        selectedStep = buttonNumberCounter - 1;
         stepNumber = String.valueOf(buttonNumberCounter);
 
         buttonView = new ButtonView(context);
         buttonView.getMainButton().setId(buttonNumberCounter);
-        buttonView.getMainButton().setText(String.valueOf(buttonNumberCounter));
+        buttonView.getMainButton().setText(stepNumber);
         buttonView.getMainButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,8 +94,9 @@ public class ButtonStepsView extends LinearLayout {
         allMainBtns.add(buttonView.getMainButton());
         allSubBtns.add(buttonView.getSubButton());
         allLinesViews.add(buttonView.getLineView());
+        buttonViewList.add(buttonView);
 
-        makeAllButtonsSmall(allMainBtns);
+        makeAllButtonsSmall(buttonView, allMainBtns);
 
         scrollView.postDelayed(new Runnable() {
             public void run() {
@@ -102,49 +107,51 @@ public class ButtonStepsView extends LinearLayout {
 
     public void addSubBtn() {
         listener.onUpdateAdapter();
-        stepNumber = String.valueOf(String.format("%d.1", buttonNumberCounter));
+        stepNumber = String.valueOf(String.format("%d.1", selectedStep + 1));
 
-        buttonView.getSubButton().setVisibility(View.VISIBLE);
-        buttonView.getSubButton().setText(String.format("%d.1", buttonNumberCounter));
-        buttonView.getSubButton().setId(buttonNumberCounter);
-        buttonView.getSubButton().setOnClickListener(new OnClickListener() {
+        buttonViewList.get(selectedStep).getSubButton().setVisibility(View.VISIBLE);
+        buttonViewList.get(selectedStep).getSubButton().setText(stepNumber);
+        buttonViewList.get(selectedStep).getSubButton().setId(selectedStep);
+        buttonViewList.get(selectedStep).getSubButton().setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 onButtonClick(view, allSubBtns);
             }
         });
-        makeAllButtonsSmall(allSubBtns);
+        makeAllButtonsSmall(buttonViewList.get(selectedStep).getSubButton(), allSubBtns);
     }
 
     private void onButtonClick(final View v, final List<Button> buttons) {
         stepNumber = ((TextView) v).getText().toString();
+        selectedStep = v.getId() - 1;
 
-        makeAllButtonsSmall(null);
+        makeAllButtonsSmall(v, null);
         if(buttons == allSubBtns) {
-            buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigSubButton());
-            allLinesViews.get(v.getId() - 1).setLayoutParams(buttonView.getLineLongSize());
+            buttons.get(selectedStep + 1).setLayoutParams(buttonView.getBigSubButton());
+            allLinesViews.get(selectedStep + 1).setLayoutParams(buttonView.getLineLongSize());
+            buttons.get(selectedStep + 1).setTextSize(buttonView.textSize());
         } else {
-            buttons.get(v.getId() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
-            allLinesViews.get(v.getId() - 1).setLayoutParams(buttonView.getLineNormalSize());
+            buttons.get(selectedStep).setLayoutParams(buttonView.getBigButtonSizeStyle());
+            allLinesViews.get(selectedStep).setLayoutParams(buttonView.getLineNormalSize());
+            buttons.get(selectedStep).setTextSize(buttonView.textSize());
         }
-        buttons.get(v.getId() - 1).setTextSize(buttonView.textSize());
 
         scrollView.postDelayed(new Runnable() {
             public void run() {
-                scrollToView(scrollView, buttons.get(v.getId() - 1));
+                scrollToView(scrollView, buttons.get(selectedStep));
             }
         }, 100L);
 
         listener.selectData();
     }
 
-    private void scrollToView(final HorizontalScrollView scrollViewParent, final View view) {
+    private void scrollToView(HorizontalScrollView scrollViewParent, View view) {
         Point childOffset = new Point();
         getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
-        scrollViewParent.smoothScrollTo(childOffset.x / 2, 0);
+        scrollViewParent.smoothScrollTo(childOffset.x, 0);
     }
 
-    private void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset) {
+    private void getDeepChildOffset(ViewGroup mainParent, ViewParent parent, View child, Point accumulatedOffset) {
         ViewGroup parentGroup = (ViewGroup) parent;
         accumulatedOffset.x += child.getLeft();
         if (parentGroup.equals(mainParent)) {
@@ -153,19 +160,21 @@ public class ButtonStepsView extends LinearLayout {
         getDeepChildOffset(mainParent, parentGroup.getParent(), parentGroup, accumulatedOffset);
     }
 
-    private void makeAllButtonsSmall(List<Button> clickedButtons) {
+    private void makeAllButtonsSmall(View v, List<Button> clickedButtons) {
         setButtonsStyle(allMainBtns);
         setButtonsStyle(allSubBtns);
         //instead of one which was clicked
         if(clickedButtons != null) {
+            int id = v.getId();
             if(clickedButtons == allSubBtns) {
-                clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigSubButton());
-                allLinesViews.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getLineLongSize());
+                clickedButtons.get(id).setLayoutParams(buttonView.getBigSubButton());
+                allLinesViews.get(id).setLayoutParams(buttonView.getLineLongSize());
+                clickedButtons.get(id).setTextSize(buttonView.textSize());
             } else {
                 clickedButtons.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getBigButtonSizeStyle());
                 allLinesViews.get(clickedButtons.size() - 1).setLayoutParams(buttonView.getLineNormalSize());
+                clickedButtons.get(clickedButtons.size() - 1).setTextSize(buttonView.textSize());
             }
-            clickedButtons.get(clickedButtons.size() - 1).setTextSize(buttonView.textSize());
         }
     }
 
