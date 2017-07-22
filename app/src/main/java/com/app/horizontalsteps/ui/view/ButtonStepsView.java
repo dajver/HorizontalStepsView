@@ -35,7 +35,7 @@ public class ButtonStepsView extends LinearLayout {
 
     private ButtonView buttonView;
 
-    private int counter = 0;
+    private int buttonNumberCounter = 0;
     private String stepNumber = "1";
     private Context context;
 
@@ -73,15 +73,12 @@ public class ButtonStepsView extends LinearLayout {
 
     public void addMainButton() {
         listener.onUpdateAdapter();
-
-        counter++;
-
-        stepNumber = String.valueOf(counter);
-        listener.onStepCounterChanged(stepNumber);
+        buttonNumberCounter++;
+        stepNumber = String.valueOf(buttonNumberCounter);
 
         buttonView = new ButtonView(context);
-        buttonView.getMainButton().setId(counter);
-        buttonView.getMainButton().setText(String.valueOf(counter));
+        buttonView.getMainButton().setId(buttonNumberCounter);
+        buttonView.getMainButton().setText(String.valueOf(buttonNumberCounter));
         buttonView.getMainButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,13 +102,11 @@ public class ButtonStepsView extends LinearLayout {
 
     public void addSubBtn() {
         listener.onUpdateAdapter();
-
-        stepNumber = String.valueOf(String.format("%d.1", counter));
-        listener.onStepCounterChanged(stepNumber);
+        stepNumber = String.valueOf(String.format("%d.1", buttonNumberCounter));
 
         buttonView.getSubButton().setVisibility(View.VISIBLE);
-        buttonView.getSubButton().setText(String.format("%d.1", counter));
-        buttonView.getSubButton().setId(counter);
+        buttonView.getSubButton().setText(String.format("%d.1", buttonNumberCounter));
+        buttonView.getSubButton().setId(buttonNumberCounter);
         buttonView.getSubButton().setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +118,6 @@ public class ButtonStepsView extends LinearLayout {
 
     private void onButtonClick(final View v, final List<Button> buttons) {
         stepNumber = ((TextView) v).getText().toString();
-        listener.onStepCounterChanged(stepNumber);
 
         makeAllButtonsSmall(null);
         if(buttons == allSubBtns) {
@@ -183,13 +177,16 @@ public class ButtonStepsView extends LinearLayout {
         }
     }
 
+    public String getStepNumber() {
+        return stepNumber;
+    }
+
     public void setListener(Listener listener) {
         this.listener = listener;
     }
 
     public interface Listener {
         void onUpdateAdapter();
-        void onStepCounterChanged(String stepNumber);
         void selectData();
     }
 }

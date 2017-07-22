@@ -33,14 +33,13 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
     private StepsAdapter adapter;
     private RealmResults<StepsDataIModel> recData;
 
-    private int counter = 0;
-    private String stepNumber = "1";
+    private int itemsCount = 0;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recData = new StepsController(getActivity()).getInfo(stepNumber);
+        recData = new StepsController(getActivity()).getInfo(buttonStepsView.getStepNumber());
         adapter = new StepsAdapter(getActivity(), recData);
         listView.setAdapter(adapter);
 
@@ -57,7 +56,7 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
 
     @OnClick(R.id.nextBtn)
     public void onNextClick() {
-        counter = 0;
+        itemsCount = 0;
 
         Intent i = new Intent(getActivity(), CreateStepActivity.class);
         startActivityForResult(i, RESULT_CODE_CREATE_STEP);
@@ -65,15 +64,15 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
 
     @OnClick(R.id.recBtn)
     public void onRecClick() {
-        counter++;
+        itemsCount++;
 
-        String fileName = "Item_" + String.format("%03d", counter);
-        new StepsController(getActivity()).addInfo(stepNumber, fileName);
+        String fileName = "Item_" + String.format("%03d", itemsCount);
+        new StepsController(getActivity()).addInfo(buttonStepsView.getStepNumber(), fileName);
         selectData();
     }
 
     public void selectData() {
-        recData = new StepsController(getActivity()).getInfo(stepNumber);
+        recData = new StepsController(getActivity()).getInfo(buttonStepsView.getStepNumber());
         if(recData.size() != 0) {
             adapter = new StepsAdapter(getActivity(), recData);
             listView.setAdapter(adapter);
@@ -103,10 +102,5 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
     @Override
     public void onUpdateAdapter() {
         listView.setAdapter(null);
-    }
-
-    @Override
-    public void onStepCounterChanged(String stepNumber) {
-        this.stepNumber = stepNumber;
     }
 }
