@@ -145,10 +145,8 @@ public class ButtonStepsView extends LinearLayout {
     }
 
     private void scrollToView(final HorizontalScrollView scrollViewParent, final View view) {
-        // Get deepChild Offset
         Point childOffset = new Point();
         getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
-        // Scroll to child.
         scrollViewParent.smoothScrollTo(childOffset.x / 2, 0);
     }
 
