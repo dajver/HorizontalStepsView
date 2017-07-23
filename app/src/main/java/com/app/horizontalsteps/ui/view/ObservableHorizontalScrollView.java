@@ -1,11 +1,16 @@
 package com.app.horizontalsteps.ui.view;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+
+import com.app.horizontalsteps.R;
 
 /**
  * Created by gleb on 7/18/17.
@@ -45,5 +50,33 @@ public class ObservableHorizontalScrollView  extends HorizontalScrollView implem
         child.addView(rightSpacer);
 
         return false;
+    }
+
+    public void scrollToTheEnd() {
+        postDelayed(new Runnable() {
+            public void run() {
+                fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+            }
+        }, 100L);
+    }
+
+    public void scrollToView(final View view) {
+        postDelayed(new Runnable() {
+            public void run() {
+                int dim = (int) getContext().getResources().getDimension(R.dimen.buttonPaddingOffset);
+                Point childOffset = new Point();
+                getDeepChildOffset(view.getParent(), view, childOffset);
+                smoothScrollTo(childOffset.x - dim, 0);
+            }
+        }, 100L);
+    }
+
+    private void getDeepChildOffset(ViewParent parent, View child, Point accumulatedOffset) {
+        ViewGroup parentGroup = (ViewGroup) parent;
+        accumulatedOffset.x += child.getLeft();
+        if (parentGroup.equals(this)) {
+            return;
+        }
+        getDeepChildOffset(parentGroup.getParent(), parentGroup, accumulatedOffset);
     }
 }

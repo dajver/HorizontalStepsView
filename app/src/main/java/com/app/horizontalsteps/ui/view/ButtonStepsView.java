@@ -1,14 +1,10 @@
 package com.app.horizontalsteps.ui.view;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -97,12 +93,7 @@ public class ButtonStepsView extends LinearLayout {
         buttonViewList.add(buttonView);
 
         makeAllButtonsSmall(buttonView, allMainBtns);
-
-        scrollView.postDelayed(new Runnable() {
-            public void run() {
-                scrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-            }
-        }, 100L);
+        scrollView.scrollToTheEnd();
     }
 
     public void addSubBtn() {
@@ -130,34 +121,14 @@ public class ButtonStepsView extends LinearLayout {
             buttons.get(selectedStep + 1).setLayoutParams(buttonView.getBigSubButton());
             allLinesViews.get(selectedStep + 1).setLayoutParams(buttonView.getLineLongSize());
             buttons.get(selectedStep + 1).setTextSize(buttonView.textSize());
+            scrollView.scrollToView(buttons.get(selectedStep + 1));
         } else {
             buttons.get(selectedStep).setLayoutParams(buttonView.getBigButtonSizeStyle());
             allLinesViews.get(selectedStep).setLayoutParams(buttonView.getLineNormalSize());
             buttons.get(selectedStep).setTextSize(buttonView.textSize());
+            scrollView.scrollToView(buttons.get(selectedStep));
         }
-
-        scrollView.postDelayed(new Runnable() {
-            public void run() {
-                scrollToView(scrollView, buttons.get(selectedStep));
-            }
-        }, 100L);
-
         listener.selectData();
-    }
-
-    private void scrollToView(HorizontalScrollView scrollViewParent, View view) {
-        Point childOffset = new Point();
-        getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
-        scrollViewParent.smoothScrollTo(childOffset.x, 0);
-    }
-
-    private void getDeepChildOffset(ViewGroup mainParent, ViewParent parent, View child, Point accumulatedOffset) {
-        ViewGroup parentGroup = (ViewGroup) parent;
-        accumulatedOffset.x += child.getLeft();
-        if (parentGroup.equals(mainParent)) {
-            return;
-        }
-        getDeepChildOffset(mainParent, parentGroup.getParent(), parentGroup, accumulatedOffset);
     }
 
     private void makeAllButtonsSmall(View v, List<Button> clickedButtons) {
