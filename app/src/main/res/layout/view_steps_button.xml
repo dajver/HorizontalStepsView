@@ -22,7 +22,7 @@
                 android:layout_width="@dimen/lineNormalSize"
                 android:layout_height="3dp"
                 android:layout_marginTop="-20dp"
-                android:background="@color/colorPrimary"></View>
+                android:background="@color/white"></View>
 
         </LinearLayout>
 
@@ -43,7 +43,7 @@
                 android:layout_height="@dimen/mainButtonSize"
                 android:background="@drawable/round_button"
                 android:text="1"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/smallButtonSize" />
 
             <Button
@@ -52,7 +52,7 @@
                 android:layout_height="@dimen/smallButtonSize"
                 android:background="@drawable/round_button"
                 android:text="1.1"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/smallButtonTextSize"
                 android:visibility="invisible" />
         </LinearLayout>
