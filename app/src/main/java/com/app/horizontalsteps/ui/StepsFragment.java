@@ -62,8 +62,8 @@ public class StepsFragment extends Fragment implements ButtonStepsView.Listener 
         startActivityForResult(i, RESULT_CODE_CREATE_STEP);
     }
 
-    @OnClick(R.id.recBtn)
-    public void onRecClick() {
+    @OnClick(R.id.addBtn)
+    public void onAddClick() {
         itemsCount++;
 
         String fileName = "Item_" + String.format("%03d", itemsCount);
