@@ -45,7 +45,7 @@ public class StepsAdapter extends BaseAdapter {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.item_steps, parent, false);
 
-        WeatherHolder holder = new WeatherHolder(convertView);
+        Holder holder = new Holder(convertView);
 
         StepsDataIModel rec = data.get(position);
         holder.name.setText(rec.getName());
@@ -53,11 +53,11 @@ public class StepsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    static class WeatherHolder {
+    class Holder {
         @BindView(R.id.nameText)
         TextView name;
 
-        public WeatherHolder(View view) {
+        public Holder(View view) {
             ButterKnife.bind(this, view);
         }
     }

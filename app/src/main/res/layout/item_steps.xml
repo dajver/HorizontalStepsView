@@ -22,9 +22,6 @@
             android:layout_toRightOf="@+id/radio"
             android:layout_toEndOf="@+id/radio"
             android:gravity="center_vertical"
-            android:layout_alignBottom="@+id/menu"
-            android:layout_toLeftOf="@+id/menu"
-            android:layout_toStartOf="@+id/menu"
             android:layout_marginLeft="10dp" />
 
         <RadioButton
